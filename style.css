@@ -39,9 +39,6 @@
             text-align: right;
             font-style: italic;
         }
-        .conflict-note {
-            color: red;
-        }
         /* Specific text colors for event notes */
         .calendar td span.event-note.pto-note {
             color: black; /* PTO notes are black */
