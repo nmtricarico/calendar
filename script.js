@@ -17,17 +17,36 @@ document.addEventListener('DOMContentLoaded', function() {
     const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT'];
 
     // Fetch events from Google Apps Script endpoint
-    async function fetchEvents() {
-        try {
-            const response = await fetch('https://script.google.com/macros/s/AKfycbx8SvudLkwLmNymSFvmKl2QbANNUL8OTZVPCRSPfqdtDEDPGv1i1lTUehL7Hl0ejQVtbg/exec'); // Replace with your Web App URL
-            const events = await response.json();
-            console.log('Fetched events:', events); // For debugging
-            return events;
-        } catch (error) {
-            console.error('Error fetching events:', error);
-            return [];
-        }
+async function fetchEvents() {
+    const sheetId = '1Q4Q9x9-l9YuKoHiguCDtyWu08Qt15IjCjPwEZsw3Kvw'; // Replace with your actual sheet ID
+    const sheetName = 'Data'; // Replace with your sheet's name
+    const query = encodeURIComponent('Select *');
+    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${sheetName}&tq=${query}`;
+
+    try {
+        const response = await fetch(url);
+        const text = await response.text();
+
+        // Extract JSON from the response
+        const json = JSON.parse(text.substring(47, text.length - 2));
+
+        const data = json.table.rows.map(row => {
+            let obj = {};
+            json.table.cols.forEach((col, i) => {
+                const cell = row.c[i];
+                obj[col.label] = cell !== null ? cell.v : '';
+            });
+            return obj;
+        });
+
+        console.log('Fetched events:', data); // For debugging
+        return data;
+    } catch (error) {
+        console.error('Error fetching events:', error);
+        return [];
     }
+}
+
 
     // Generate the calendar
     function generateCalendar(year, month, events) {
