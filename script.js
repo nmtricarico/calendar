@@ -281,3 +281,7 @@ function generateCalendar(year, month, events) {
           generateCalendar(year, month, events);
       });
 
+      // Debug
+      console.log('Fetched events:', events);
+
+
