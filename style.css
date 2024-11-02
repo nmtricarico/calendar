@@ -41,10 +41,6 @@
         }
         .conflict-note {
             color: red;
-            font-size: 10;
-            text-align: right;
-            margin-right: 20;
-            margin-top: 10;
         }
         /* Specific text colors for event notes */
         .calendar td span.event-note.pto-note {
