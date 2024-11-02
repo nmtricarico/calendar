@@ -33,6 +33,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const calendarTable = document.getElementById('calendarTable');
         calendarTable.innerHTML = '';
 
+            // Create header row
+    let headerRow = document.createElement('tr');
+    headerRow.classList.add('calendar-header'); // Add a class for styling
+
+    const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT'];
+    for (let day of daysOfWeek) {
+        let th = document.createElement('th');
+        th.innerText = day;
+        headerRow.appendChild(th);
+    }
+    calendarTable.appendChild(headerRow);
+
         // Prepare event mapping
         const eventMap = {};
 
@@ -162,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     } else if (cellClass === 'education-event') {
                         let eduEvent = eventsOnDate.find(e => e.type === 'education');
-                        eventNote = eduEvent.eventType;
+                        eventNote = "CTC";
                     } else if (cellClass === 'pto-event') {
                         eventNote = 'PTO';
                     }
