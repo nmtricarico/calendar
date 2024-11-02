@@ -13,12 +13,12 @@
         const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT'];
 
         // Events Data
-async async function fetchEvents() {
-    const sheetId = 'e/2PACX-1vSN6n5OxBoJcVWu_NfhLHWJMDu3ZDttPc_3nEJ8b43mgkthF_J2ySk58PbWlCmJdmKqjlJXDBGgsS7h/pubhtml'; // Extract from your sheet's URL
-    const sheetName = 'Sheet1'; // Replace with your sheet's name
+async function fetchEvents() {
+    const sheetId = '1Q4Q9x9-l9YuKoHiguCDtyWu08Qt15IjCjPwEZsw3Kvw'; // Correct Sheet ID
+    const sheetName = 'Sheet1'; // Replace with your actual sheet name
     const query = encodeURIComponent('Select *');
-    const url = `https://docs.google.com/spreadsheets/d/1Q4Q9x9-l9YuKoHiguCDtyWu08Qt15IjCjPwEZsw3Kvw/edit?usp=sharing`;
-
+    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${sheetName}&tq=${query}`;
+    
     try {
         const response = await fetch(url);
         const text = await response.text();
@@ -37,14 +37,14 @@ async async function fetchEvents() {
     }
 }
 
-
-
         // Generate the calendar
-        function fetchEvents().then(events => {
-             generateCalendar(year, month, events);
-         });
+function generateCalendar(year, month, events) {
+    const calendarTable = document.getElementById('calendarTable');
 
-            // Create header row
+       // Clear any existing content
+    calendarTable.innerHTML = '';
+
+
             let headerRow = document.createElement('tr');
             for (let day of daysOfWeek) {
                 let th = document.createElement('th');
@@ -280,4 +280,4 @@ async async function fetchEvents() {
       fetchEvents().then(events => {
           generateCalendar(year, month, events);
       });
-  
+
