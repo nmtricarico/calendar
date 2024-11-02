@@ -1,5 +1,4 @@
- <script>
-        // Parameters
+   // Parameters
         const year = 2024;
         const month = 10; // November (0-based index: 0 for January, so 10 for November)
 
@@ -259,4 +258,3 @@
         }
 
         generateCalendar(year, month);
-    </script>
