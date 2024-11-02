@@ -1,5 +1,3 @@
-// script.js
-
 document.addEventListener('DOMContentLoaded', function() {
 
     // Parameters
@@ -16,37 +14,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // Days of the week starting from Sunday
     const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT'];
 
-    // Fetch events from Google Apps Script endpoint
+    // Fetch events from SheetDB
     async function fetchEvents() {
-    try {
-        const response = await fetch('https://sheetdb.io/api/v1/za0f3itq46jvd');
-        const data = await response.json();
-        console.log('Fetched events:', data); // For debugging
-        return data;
-    } catch (error) {
-        console.error('Error fetching events:', error);
-        return [];
+        try {
+            const response = await fetch('https://sheetdb.io/api/v1/YOUR_SHEETDB_API_KEY');
+            const data = await response.json();
+            console.log('Fetched events:', data); // For debugging
+            return data;
+        } catch (error) {
+            console.error('Error fetching events:', error);
+            return [];
+        }
     }
-}
 
     // Generate the calendar
     function generateCalendar(year, month, events) {
         const calendarTable = document.getElementById('calendarTable');
-
-        // Clear any existing content
         calendarTable.innerHTML = '';
-
-        // Create header row
-        let headerRow = document.createElement('tr');
-        for (let day of daysOfWeek) {
-            let th = document.createElement('th');
-            th.innerText = day;
-            headerRow.appendChild(th);
-        }
-        calendarTable.appendChild(headerRow);
 
         // Prepare event mapping
         const eventMap = {};
+
         // Process events
         events.forEach(event => {
             if (event.type === 'PTO') {
