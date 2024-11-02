@@ -1,57 +1,65 @@
-   // Parameters
-        const year = 2024;
-        const month = 10; // November (0-based index: 0 for January, so 10 for November)
+// Wrap your code in DOMContentLoaded to ensure DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
 
-        // Get month name and set title
-        const monthNames = [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        ];
-        document.getElementById('monthYear').innerText = monthNames[month] + ' ' + year;
+    // Parameters
+    const year = 2024;
+    const month = 10; // November (0-based index: 0 for January)
 
-        // Days of the week starting from Sunday
-        const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT'];
+    // Get month name and set title
+    const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    document.getElementById('monthYear').innerText = monthNames[month] + ' ' + year;
 
-        // Events Data
-async function fetchEvents() {
-    const sheetId = '1Q4Q9x9-l9YuKoHiguCDtyWu08Qt15IjCjPwEZsw3Kvw'; // Correct Sheet ID
-    const sheetName = 'Sheet1'; // Replace with your actual sheet name
-    const query = encodeURIComponent('Select *');
-    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${sheetName}&tq=${query}`;
-    
-    try {
-        const response = await fetch(url);
-        const text = await response.text();
-        const json = JSON.parse(text.substr(47).slice(0, -2));
-        const data = json.table.rows.map(row => {
-            let obj = {};
-            json.table.cols.forEach((col, i) => {
-                obj[col.label] = row.c[i] ? row.c[i].v : '';
+    // Days of the week starting from Sunday
+    const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT'];
+
+    // Fetch events from Google Sheets
+    async function fetchEvents() {
+        const sheetId = '1Q4Q9x9-l9YuKoHiguCDtyWu08Qt15IjCjPwEZsw3Kvw'; // Replace with your actual sheet ID
+        const sheetName = 'Sheet1'; // Replace with your sheet's name
+        const query = encodeURIComponent('Select *');
+        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${sheetName}&tq=${query}`;
+
+        try {
+            const response = await fetch(url);
+            const text = await response.text();
+
+            // Parse the response to extract JSON data
+            const json = JSON.parse(text.substr(47).slice(0, -2));
+
+            const data = json.table.rows.map(row => {
+                let obj = {};
+                json.table.cols.forEach((col, i) => {
+                    obj[col.label] = row.c[i] ? row.c[i].v : '';
+                });
+                return obj;
             });
-            return obj;
-        });
-        return data;
-    } catch (error) {
-        console.error('Error fetching events:', error);
-        return [];
+
+            console.log('Fetched events:', data); // For debugging
+            return data;
+        } catch (error) {
+            console.error('Error fetching events:', error);
+            return [];
+        }
     }
-}
 
-        // Generate the calendar
-function generateCalendar(year, month, events) {
-    const calendarTable = document.getElementById('calendarTable');
+    // Generate the calendar
+    function generateCalendar(year, month, events) {
+        const calendarTable = document.getElementById('calendarTable');
 
-       // Clear any existing content
-    calendarTable.innerHTML = '';
+        // Clear any existing content
+        calendarTable.innerHTML = '';
 
-
-            let headerRow = document.createElement('tr');
-            for (let day of daysOfWeek) {
-                let th = document.createElement('th');
-                th.innerText = day;
-                headerRow.appendChild(th);
-            }
-            calendarTable.appendChild(headerRow);
+        // Create header row
+        let headerRow = document.createElement('tr');
+        for (let day of daysOfWeek) {
+            let th = document.createElement('th');
+            th.innerText = day;
+            headerRow.appendChild(th);
+        }
+        calendarTable.appendChild(headerRow);
 
             // Prepare event mapping
             const eventMap = {};
@@ -277,11 +285,8 @@ function generateCalendar(year, month, events) {
         }
 
       // Fetch events and generate calendar
-      fetchEvents().then(events => {
-          generateCalendar(year, month, events);
-      });
+    fetchEvents().then(events => {
+        generateCalendar(year, month, events);
+    });
 
-      // Debug
-      console.log('Fetched events:', events);
-
-
+});
