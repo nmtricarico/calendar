@@ -17,28 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT'];
 
     // Fetch events from Google Apps Script endpoint
-async function fetchEvents() {
-    const sheetId = '1Q4Q9x9-l9YuKoHiguCDtyWu08Qt15IjCjPwEZsw3Kvw'; // Replace with your actual sheet ID
-    const sheetName = 'Data'; // Replace with your sheet's name
-    const query = encodeURIComponent('Select *');
-    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${sheetName}&tq=${query}`;
-
+    async function fetchEvents() {
     try {
-        const response = await fetch(url);
-        const text = await response.text();
-
-        // Extract JSON from the response
-        const json = JSON.parse(text.substring(47, text.length - 2));
-
-        const data = json.table.rows.map(row => {
-            let obj = {};
-            json.table.cols.forEach((col, i) => {
-                const cell = row.c[i];
-                obj[col.label] = cell !== null ? cell.v : '';
-            });
-            return obj;
-        });
-
+        const response = await fetch('https://sheetdb.io/api/v1/za0f3itq46jvd');
+        const data = await response.json();
         console.log('Fetched events:', data); // For debugging
         return data;
     } catch (error) {
@@ -46,7 +28,6 @@ async function fetchEvents() {
         return [];
     }
 }
-
 
     // Generate the calendar
     function generateCalendar(year, month, events) {
