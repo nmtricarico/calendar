@@ -13,17 +13,35 @@
         const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT'];
 
         // Events Data
-        const events = [
-            { date: '2024-11-06', type: 'case', caseType: 'VA', time: '09:00', account: 'Account A' },
-            { date: '2024-11-07', type: 'case', caseType: 'STAR', time: '11:00', account: 'Account B' },
-            { date: '2024-11-10', type: 'education', eventType: 'CTC', time: '10:00', account: 'Account C' },
-            { startDate: '2024-11-17', endDate: '2024-11-20', type: 'PTO' },
-            { date: '2024-11-19', type: 'case', caseType: 'VA', time: '14:00', account: 'Account D' }
-        ];
+async function fetchEvents() {
+    const sheetId = 'YOUR_GOOGLE_SHEET_ID'; // Extract from your sheet's URL
+    const sheetName = 'Sheet1'; // Replace with your sheet's name
+    const query = encodeURIComponent('Select *');
+    const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN6n5OxBoJcVWu_NfhLHWJMDu3ZDttPc_3nEJ8b43mgkthF_J2ySk58PbWlCmJdmKqjlJXDBGgsS7h/pubhtml`;
+
+    try {
+        const response = await fetch(url);
+        const text = await response.text();
+        const json = JSON.parse(text.substr(47).slice(0, -2));
+        const data = json.table.rows.map(row => {
+            let obj = {};
+            json.table.cols.forEach((col, i) => {
+                obj[col.label] = row.c[i] ? row.c[i].v : '';
+            });
+            return obj;
+        });
+        return data;
+    } catch (error) {
+        console.error('Error fetching events:', error);
+        return [];
+    }
+}
+
 
         // Generate the calendar
-        function generateCalendar(year, month) {
-            const calendarTable = document.getElementById('calendarTable');
+        function fetchEvents().then(events => {
+             generateCalendar(year, month, events);
+         });
 
             // Create header row
             let headerRow = document.createElement('tr');
@@ -257,4 +275,8 @@
             return content;
         }
 
-        generateCalendar(year, month);
+      // Fetch events and generate calendar
+      fetchEvents().then(events => {
+          generateCalendar(year, month, events);
+      });
+  
