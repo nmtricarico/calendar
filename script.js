@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fetch events from SheetDB
     async function fetchEvents() {
         try {
-            const response = await fetch('https://sheetdb.io/api/v1/YOUR_SHEETDB_API_KEY');
+            const response = await fetch('https://sheetdb.io/api/v1/za0f3itq46jvd');
             const data = await response.json();
             console.log('Fetched events:', data); // For debugging
             return data;
@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Generate the calendar
     function generateCalendar(year, month, events) {
+         console.log('Events received in generateCalendar:', events);
         const calendarTable = document.getElementById('calendarTable');
         calendarTable.innerHTML = '';
 
@@ -253,6 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Fetch events and generate calendar
     fetchEvents().then(events => {
+         console.log('Events to be passed to generateCalendar:', events);
         generateCalendar(year, month, events);
     });
 
