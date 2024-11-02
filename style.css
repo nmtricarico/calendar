@@ -27,9 +27,9 @@
             top: 5px;
             left: 5px;
             font-weight: bold;
-                font-size: 15px;
-                text-align: right;
-                margin-right: 15%;
+            font-size: 15px;
+            text-align: right;
+            margin-right: 20%;
         }
         .calendar td span.event-note {
             position: absolute;
@@ -37,12 +37,14 @@
             right: 5px;
             font-size: 10px;
             text-align: right;
-                font-style: italic;
+            font-style: italic;
         }
         .conflict-note {
             color: red;
             font-weight: bold;
-            text-align: center;
+            font-size: 12px;
+            text-align: right;
+            margin-right: 20%;
             margin-top: 10px;
         }
         /* Specific text colors for event notes */
