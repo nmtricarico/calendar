@@ -1,5 +1,5 @@
         body {
-            font-family: Arial, sans-serif;
+            font-family: Helvetica, sans-serif;
         }
         .calendar {
             width: 100%;
@@ -27,13 +27,23 @@
             top: 5px;
             left: 5px;
             font-weight: bold;
+                font-size: 15px;
+                text-align: right;
+                margin-right: 15%;
         }
         .calendar td span.event-note {
             position: absolute;
             bottom: 5px;
             right: 5px;
-            font-size: 12px;
+            font-size: 10px;
             text-align: right;
+                font-style: italic;
+        }
+        .conflict-note {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
         }
         /* Specific text colors for event notes */
         .calendar td span.event-note.pto-note {
