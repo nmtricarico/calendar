@@ -13,11 +13,11 @@
         const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT'];
 
         // Events Data
-async function fetchEvents() {
-    const sheetId = 'YOUR_GOOGLE_SHEET_ID'; // Extract from your sheet's URL
+async async function fetchEvents() {
+    const sheetId = 'e/2PACX-1vSN6n5OxBoJcVWu_NfhLHWJMDu3ZDttPc_3nEJ8b43mgkthF_J2ySk58PbWlCmJdmKqjlJXDBGgsS7h/pubhtml'; // Extract from your sheet's URL
     const sheetName = 'Sheet1'; // Replace with your sheet's name
     const query = encodeURIComponent('Select *');
-    const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vSN6n5OxBoJcVWu_NfhLHWJMDu3ZDttPc_3nEJ8b43mgkthF_J2ySk58PbWlCmJdmKqjlJXDBGgsS7h/pubhtml`;
+    const url = `https://docs.google.com/spreadsheets/d/1Q4Q9x9-l9YuKoHiguCDtyWu08Qt15IjCjPwEZsw3Kvw/edit?usp=sharing`;
 
     try {
         const response = await fetch(url);
@@ -36,6 +36,7 @@ async function fetchEvents() {
         return [];
     }
 }
+
 
 
         // Generate the calendar
