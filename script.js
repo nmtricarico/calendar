@@ -16,38 +16,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT'];
 
     // Fetch events from Google Sheets
-    async function fetchEvents() {
-        const sheetId = '1Q4Q9x9-l9YuKoHiguCDtyWu08Qt15IjCjPwEZsw3Kvw'; // Replace with your actual sheet ID
-        const sheetName = 'Sheet1'; // Replace with your sheet's name
-        const query = encodeURIComponent('Select *');
-        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${sheetName}&tq=${query}`;
-
+      async function fetchEvents() {
         try {
-            const response = await fetch(url);
-            const text = await response.text();
-
-            // Parse the response to extract JSON data
-            const json = JSON.parse(text.substr(47).slice(0, -2));
-
-            const data = json.table.rows.map(row => {
-                let obj = {};
-                json.table.cols.forEach((col, i) => {
-                    obj[col.label] = row.c[i] ? row.c[i].v : '';
-                });
-                return obj;
-            });
-
-            console.log('Fetched events:', data); // For debugging
-            return data;
+            const response = await fetch('https://script.google.com/macros/s/AKfycbyFjAr0FPqsgC-f6Zi9c9-kEoAFj24NJ-4OJu77xcmZIqleEgLEHj6BwEGHLpgP9B61kQ/exec');
+            const events = await response.json();
+            console.log('Fetched events:', events); // For debugging
+            return events;
         } catch (error) {
             console.error('Error fetching events:', error);
             return [];
         }
     }
 
+
     // Generate the calendar
     function generateCalendar(year, month, events) {
-        const calendarTable = document.getElementById('calendarTable');
+    const calendarTable = document.getElementById('calendarTable');
 
         // Clear any existing content
         calendarTable.innerHTML = '';
@@ -285,8 +269,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
       // Fetch events and generate calendar
-    fetchEvents().then(events => {
-        generateCalendar(year, month, events);
-    });
-
-});
+        fetchEvents().then(events => {
+            generateCalendar(year, month, events);
+        });
