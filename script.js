@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fetch events from SheetDB
     async function fetchEvents() {
         try {
-            const response = await fetch('https://sheetdb.io/api/v1/za0f3itq46jvd');
+            const response = await fetch('za0f3itq46jvd');
             const data = await response.json();
             console.log('Fetched events:', data); // For debugging
             return data;
