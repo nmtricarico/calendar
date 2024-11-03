@@ -259,7 +259,7 @@ function createTooltipContent(events) {
 
     events.forEach(event => {
         // Check for time value or assign "TBD" if not available
-        let time = event.time && event.time.trim() ? event.time : '';
+        let time = event.time ? convertToMilitaryTime(event.time) : 'TBD';
 
         // Handle event type to determine what to display
         let type = event.type === 'CASE' ? event.CASEType : event.eventType;
@@ -270,6 +270,28 @@ function createTooltipContent(events) {
 
     content += '</table>';
     return content;
+}
+
+// Helper function to convert 12-hour time format to military (24-hour) time format
+function convertToMilitaryTime(time) {
+    // Assuming the time is in a format like "hh:mm AM/PM"
+    let [timePart, modifier] = time.split(' '); // Split time and modifier (AM/PM)
+    let [hours, minutes] = timePart.split(':');
+
+    // Convert to numbers for easier processing
+    hours = parseInt(hours, 10);
+
+    // Convert to 24-hour format
+    if (modifier.toUpperCase() === 'PM' && hours !== 12) {
+        hours += 12;
+    } else if (modifier.toUpperCase() === 'AM' && hours === 12) {
+        hours = 0;
+    }
+
+    // Format with leading zero if needed
+    hours = hours < 10 ? '0' + hours : hours;
+
+    return `${hours}:${minutes}`;
 }
 
 
