@@ -163,13 +163,13 @@ document.addEventListener('DOMContentLoaded', function() {
                             eventNote = conflictingEvent.eventType;
                         }
                     } else if (cellClass === 'case-event') {
-                        let cases = eventsOnDate.filter(e => e.type === 'case');
-                        if (cases.length === 1) {
-                            eventNote = cases[0].caseType;
+                        let case = eventsOnDate.filter(e => e.type === 'case');
+                        if (case.length === 1) {
+                            eventNote = case[0].caseType;
                         } else {
                             // Count each case type
                             let caseCounts = {};
-                            cases.forEach(c => {
+                            case.forEach(c => {
                                 caseCounts[c.caseType] = (caseCounts[c.caseType] || 0) + 1;
                             });
                             eventNote = Object.entries(caseCounts).map(([type, count]) => `${type}, ${count}`).join('; ');
