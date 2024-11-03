@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Process events
         events.forEach(event => {
-            if (event.type === 'PTO') {
+            if (event.type === 'pto') {
                 // PTO spans multiple days
                 let currentDate = new Date(event.startDate);
                 const endDate = new Date(event.endDate);
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     let isConflict = false;
 
                     // Determine if there is a PTO and another event on the same day
-                    let hasPTO = eventsOnDate.some(e => e.type === 'PTO');
+                    let hasPTO = eventsOnDate.some(e => e.type === 'pto');
                     let hasCaseOrEducation = eventsOnDate.some(e => e.type === 'case' || e.type === 'education');
 
                     if (hasPTO && hasCaseOrEducation) {
@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         let eduEvent = eventsOnDate.find(e => e.type === 'education');
                         eventNote = "CTC";
                     } else if (cellClass === 'pto-event') {
-                        eventNote = 'PTO';
+                        eventNote = 'pto';
                     }
 
                     if (eventNote) {
