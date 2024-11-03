@@ -258,7 +258,9 @@ function createTooltipContent(events) {
     content += '<tr><th>Time</th><th>Type</th><th>Account</th></tr>';
 
     events.forEach(event => {
-        // Check for time value or assign "TBD" if not available
+        console.log('Event details:', event); // Debugging
+
+        // Convert the time from plain text to military time if it exists
         let time = event.time ? convertToMilitaryTime(event.time) : 'TBD';
 
         // Handle event type to determine what to display
@@ -272,28 +274,37 @@ function createTooltipContent(events) {
     return content;
 }
 
-// Helper function to convert 12-hour time format to military (24-hour) time format
+// Helper function to convert plain text time to military (24-hour) format
 function convertToMilitaryTime(time) {
-    // Assuming the time is in a format like "hh:mm AM/PM"
-    let [timePart, modifier] = time.split(' '); // Split time and modifier (AM/PM)
+    if (!time) {
+        return 'TBD';
+    }
+
+    // Assuming the time is in the format "hh:mm AM/PM"
+    let [timePart, modifier] = time.split(' ');
+
+    // If there's no modifier (AM/PM), assume it’s already in 24-hour format
+    if (!modifier) {
+        return timePart; 
+    }
+
     let [hours, minutes] = timePart.split(':');
 
-    // Convert to numbers for easier processing
+    // Convert hours to number for easier processing
     hours = parseInt(hours, 10);
 
-    // Convert to 24-hour format
+    // Convert to 24-hour format based on AM/PM
     if (modifier.toUpperCase() === 'PM' && hours !== 12) {
         hours += 12;
     } else if (modifier.toUpperCase() === 'AM' && hours === 12) {
         hours = 0;
     }
 
-    // Format with leading zero if needed
+    // Format the hours with leading zeros if needed
     hours = hours < 10 ? '0' + hours : hours;
 
     return `${hours}:${minutes}`;
 }
-
 
     // Fetch events and generate calendar
     fetchEvents().then(events => {
