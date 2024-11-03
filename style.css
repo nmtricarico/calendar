@@ -52,10 +52,10 @@ body {
     color: black; /* PTO notes are black */
 }
 .calendar td span.event-note.case-note {
-    color: orange; /* Case notes are orange */
+    color: orange; /* case notes are orange */
 }
 .calendar td span.event-note.education-note {
-    color: darkblue; /* Education notes are dark blue */
+    color: darkblue; /* education notes are dark blue */
 }
 .calendar td span.event-note.conflict-note {
     color: maroon; /* Conflict notes are maroon */
