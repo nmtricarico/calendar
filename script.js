@@ -253,18 +253,20 @@ document.addEventListener('DOMContentLoaded', function() {
         tooltip.style.display = 'none';
     }
 
-    function createTooltipContent(events) {
-        let content = '<table>';
-        content += '<tr><th>Time</th><th>Type</th><th>Account</th></tr>';
+function createTooltipContent(events) {
+    let content = '<table>';
+    content += '<tr><th>Time</th><th>Type</th><th>Account</th></tr>';
 
-        events.forEach(event => {
-            let type = event.type === 'CASE' ? event.CASEType : event.eventType;
-            content += `<tr><td>${event.time}</td><td>${type}</td><td>${event.account}</td></tr>`;
-        });
+    events.forEach(event => {
+        let type = event.type === 'CASE' ? event.CASEType : event.eventType;
+        // Set 'TBD' if the event time is not provided
+        let time = event.time ? event.time : 'TBD';
+        content += `<tr><td>${time}</td><td>${type}</td><td>${event.account}</td></tr>`;
+    });
 
-        content += '</table>';
-        return content;
-    }
+    content += '</table>';
+    return content;
+}
 
     // Fetch events and generate calendar
     fetchEvents().then(events => {
