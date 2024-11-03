@@ -258,15 +258,20 @@ function createTooltipContent(events) {
     content += '<tr><th>Time</th><th>Type</th><th>Account</th></tr>';
 
     events.forEach(event => {
+        // Check for time value or assign "TBD" if not available
+        let time = event.time && event.time.trim() ? event.time : '';
+
+        // Handle event type to determine what to display
         let type = event.type === 'CASE' ? event.CASEType : event.eventType;
-        // Set 'TBD' if the event time is not provided
-        let time = event.time ? event.time : 'TBD';
+
+        // Append data row to content
         content += `<tr><td>${time}</td><td>${type}</td><td>${event.account}</td></tr>`;
     });
 
     content += '</table>';
     return content;
 }
+
 
     // Fetch events and generate calendar
     fetchEvents().then(events => {
