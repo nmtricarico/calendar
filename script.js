@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Process events
         events.forEach(event => {
-            if (event.type === 'pto') {
+            if (event.type === 'PTO') {
                 // PTO spans multiple days
                 let currentDate = new Date(event.startDate);
                 const endDate = new Date(event.endDate);
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     let isConflict = false;
 
                     // Determine if there is a PTO and another event on the same day
-                    let hasPTO = eventsOnDate.some(e => e.type === 'pto');
+                    let hasPTO = eventsOnDate.some(e => e.type === 'PTO');
                     let hasCaseOrEducation = eventsOnDate.some(e => e.type === 'case' || e.type === 'education');
 
                     if (hasPTO && hasCaseOrEducation) {
@@ -143,14 +143,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         cellClass = 'conflict-event';
                         isConflict = true;
                     } else if (hasPTO) {
-                        cellClass = 'pto-event';
+                        cellClass = 'PTO-event';
                     } else if (eventsOnDate.some(e => e.type === 'education')) {
                         cellClass = 'education-event';
                     } else if (eventsOnDate.some(e => e.type === 'case')) {
                         cellClass = 'case-event';
                     }
 
-                    cell.classList.add(cellClass);
+                    if (cellClass) {
+                        cell.classList.add(cellClass);
+                    }
 
                     // Add event notes where appropriate
                     if (isConflict) {
@@ -175,8 +177,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else if (cellClass === 'education-event') {
                         let eduEvent = eventsOnDate.find(e => e.type === 'education');
                         eventNote = "CTC";
-                    } else if (cellClass === 'pto-event') {
-                        eventNote = 'pto';
+                    } else if (cellClass === 'PTO-event') {
+                        eventNote = 'PTO';
                     }
 
                     if (eventNote) {
@@ -184,8 +186,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         spanEventNote.classList.add('event-note');
 
                         // Assign text color class based on the event type
-                        if (cellClass === 'pto-event') {
-                            spanEventNote.classList.add('pto-note');
+                        if (cellClass === 'PTO-event') {
+                            spanEventNote.classList.add('PTO-note');
                         } else if (isConflict) {
                             spanEventNote.classList.add('conflict-note');
                         } else if (cellClass === 'case-event') {
