@@ -253,58 +253,18 @@ document.addEventListener('DOMContentLoaded', function() {
         tooltip.style.display = 'none';
     }
 
-function createTooltipContent(events) {
-    let content = '<table>';
-    content += '<tr><th>Time</th><th>Type</th><th>Account</th></tr>';
+    function createTooltipContent(events) {
+        let content = '<table>';
+        content += '<tr><th>Time</th><th>Type</th><th>Account</th></tr>';
 
-    events.forEach(event => {
-        console.log('Event details:', event); // Debugging
+        events.forEach(event => {
+            let type = event.type === 'CASE' ? event.CASEType : event.eventType;
+            content += `<tr><td>${event.time}</td><td>${type}</td><td>${event.account}</td></tr>`;
+        });
 
-        // Convert the time from plain text to military time if it exists
-        let time = event.time ? convertToMilitaryTime(event.time) : 'TBD';
-
-        // Handle event type to determine what to display
-        let type = event.type === 'CASE' ? event.CASEType : event.eventType;
-
-        // Append data row to content
-        content += `<tr><td>${time}</td><td>${type}</td><td>${event.account}</td></tr>`;
-    });
-
-    content += '</table>';
-    return content;
-}
-
-// Helper function to convert plain text time to military (24-hour) format
-function convertToMilitaryTime(time) {
-    if (!time) {
-        return 'TBD';
+        content += '</table>';
+        return content;
     }
-
-    // Assuming the time is in the format "hh:mm AM/PM"
-    let [timePart, modifier] = time.split(' ');
-
-    // If there's no modifier (AM/PM), assume it’s already in 24-hour format
-    if (!modifier) {
-        return timePart; 
-    }
-
-    let [hours, minutes] = timePart.split(':');
-
-    // Convert hours to number for easier processing
-    hours = parseInt(hours, 10);
-
-    // Convert to 24-hour format based on AM/PM
-    if (modifier.toUpperCase() === 'PM' && hours !== 12) {
-        hours += 12;
-    } else if (modifier.toUpperCase() === 'AM' && hours === 12) {
-        hours = 0;
-    }
-
-    // Format the hours with leading zeros if needed
-    hours = hours < 10 ? '0' + hours : hours;
-
-    return `${hours}:${minutes}`;
-}
 
     // Fetch events and generate calendar
     fetchEvents().then(events => {
