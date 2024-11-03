@@ -136,18 +136,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // Determine if there is a PTO and another event on the same day
                     let hasPTO = eventsOnDate.some(e => e.type === 'PTO');
-                    let hascaseOreducation = eventsOnDate.some(e => e.type === 'case' || e.type === 'education');
+                    let hasCASEOrEDUCATION = eventsOnDate.some(e => e.type === 'CASE' || e.type === 'EDUCATION');
 
-                    if (hasPTO && hascaseOreducation) {
+                    if (hasPTO && hasCASEOrEDUCATION) {
                         // Conflict
                         cellClass = 'conflict-event';
                         isConflict = true;
                     } else if (hasPTO) {
                         cellClass = 'PTO-event';
-                    } else if (eventsOnDate.some(e => e.type === 'education')) {
-                        cellClass = 'education-event';
-                    } else if (eventsOnDate.some(e => e.type === 'case')) {
-                        cellClass = 'case-event';
+                    } else if (eventsOnDate.some(e => e.type === 'EDUCATION')) {
+                        cellClass = 'EDUCATION-event';
+                    } else if (eventsOnDate.some(e => e.type === 'CASE')) {
+                        cellClass = 'CASE-event';
                     }
 
                     if (cellClass) {
@@ -156,26 +156,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // Add event notes where appropriate
                     if (isConflict) {
-                        let conflictingEvent = eventsOnDate.find(e => e.type === 'case' || e.type === 'education');
-                        if (conflictingEvent.type === 'case') {
-                            eventNote = conflictingEvent.caseType;
-                        } else if (conflictingEvent.type === 'education') {
+                        let conflictingEvent = eventsOnDate.find(e => e.type === 'CASE' || e.type === 'EDUCATION');
+                        if (conflictingEvent.type === 'CASE') {
+                            eventNote = conflictingEvent.CASEType;
+                        } else if (conflictingEvent.type === 'EDUCATION') {
                             eventNote = conflictingEvent.eventType;
                         }
-                    } else if (cellClass === 'case-event') {
-                        let case = eventsOnDate.filter(e => e.type === 'case');
-                        if (case.length === 1) {
-                            eventNote = case[0].caseType;
+                    } else if (cellClass === 'CASE-event') {
+                        let CASE = eventsOnDate.filter(e => e.type === 'CASE');
+                        if (CASE.length === 1) {
+                            eventNote = CASE[0].CASEType;
                         } else {
-                            // Count each case type
-                            let caseCounts = {};
-                            case.forEach(c => {
-                                caseCounts[c.caseType] = (caseCounts[c.caseType] || 0) + 1;
+                            // Count each CASE type
+                            let CASECounts = {};
+                            CASE.forEach(c => {
+                                CASECounts[c.CASEType] = (CASECounts[c.CASEType] || 0) + 1;
                             });
-                            eventNote = Object.entries(caseCounts).map(([type, count]) => `${type}, ${count}`).join('; ');
+                            eventNote = Object.entries(CASECounts).map(([type, count]) => `${type}, ${count}`).join('; ');
                         }
-                    } else if (cellClass === 'education-event') {
-                        let eduEvent = eventsOnDate.find(e => e.type === 'education');
+                    } else if (cellClass === 'EDUCATION-event') {
+                        let eduEvent = eventsOnDate.find(e => e.type === 'EDUCATION');
                         eventNote = "CTC";
                     } else if (cellClass === 'PTO-event') {
                         eventNote = 'PTO';
@@ -190,18 +190,18 @@ document.addEventListener('DOMContentLoaded', function() {
                             spanEventNote.classList.add('PTO-note');
                         } else if (isConflict) {
                             spanEventNote.classList.add('conflict-note');
-                        } else if (cellClass === 'case-event') {
-                            spanEventNote.classList.add('case-note');
-                        } else if (cellClass === 'education-event') {
-                            spanEventNote.classList.add('education-note');
+                        } else if (cellClass === 'CASE-event') {
+                            spanEventNote.classList.add('CASE-note');
+                        } else if (cellClass === 'EDUCATION-event') {
+                            spanEventNote.classList.add('EDUCATION-note');
                         }
 
                         spanEventNote.innerText = eventNote;
                         cell.appendChild(spanEventNote);
                     }
 
-                    // Add hover interaction for case or education events
-                    if (hascaseOreducation) {
+                    // Add hover interaction for CASE or EDUCATION events
+                    if (hasCASEOrEDUCATION) {
                         cell.addEventListener('mouseenter', (e) => {
                             showTooltip(e, eventsOnDate);
                         });
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function showTooltip(e, eventsOnDate) {
         // Filter out PTO events
-        let eventsToShow = eventsOnDate.filter(e => e.type === 'case' || e.type === 'education');
+        let eventsToShow = eventsOnDate.filter(e => e.type === 'CASE' || e.type === 'EDUCATION');
         if (eventsToShow.length === 0) return;
 
         tooltip.innerHTML = createTooltipContent(eventsToShow);
@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
         content += '<tr><th>Time</th><th>Type</th><th>Account</th></tr>';
 
         events.forEach(event => {
-            let type = event.type === 'case' ? event.caseType : event.eventType;
+            let type = event.type === 'CASE' ? event.CASEType : event.eventType;
             content += `<tr><td>${event.time}</td><td>${type}</td><td>${event.account}</td></tr>`;
         });
 
