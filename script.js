@@ -136,9 +136,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // Determine if there is a PTO and another event on the same day
                     let hasPTO = eventsOnDate.some(e => e.type === 'PTO');
-                    let hasCaseOrEducation = eventsOnDate.some(e => e.type === 'case' || e.type === 'education');
+                    let hascaseOreducation = eventsOnDate.some(e => e.type === 'case' || e.type === 'education');
 
-                    if (hasPTO && hasCaseOrEducation) {
+                    if (hasPTO && hascaseOreducation) {
                         // Conflict
                         cellClass = 'conflict-event';
                         isConflict = true;
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
 
                     // Add hover interaction for case or education events
-                    if (hasCaseOrEducation) {
+                    if (hascaseOreducation) {
                         cell.addEventListener('mouseenter', (e) => {
                             showTooltip(e, eventsOnDate);
                         });
