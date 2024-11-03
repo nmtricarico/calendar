@@ -256,7 +256,6 @@ document.addEventListener('DOMContentLoaded', function() {
 function createTooltipContent(events) {
     let content = '<table>';
     content += '<tr><th>Time</th><th>Type</th><th>Account</th></tr>';
-
     events.forEach(event => {
         let type = event.type === 'CASE' ? event.CASEType : event.eventType;
         // Set 'TBD' if the event time is not provided
@@ -267,7 +266,6 @@ function createTooltipContent(events) {
     content += '</table>';
     return content;
 }
-
 
     // Fetch events and generate calendar
     fetchEvents().then(events => {
