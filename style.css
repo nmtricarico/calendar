@@ -51,11 +51,11 @@ body {
 .calendar td span.event-note.PTO-note {
     color: black; /* PTO notes are black */
 }
-.calendar td span.event-note.case-note {
-    color: orange; /* case notes are orange */
+.calendar td span.event-note.CASE-note {
+    color: orange; /* CASE notes are orange */
 }
-.calendar td span.event-note.education-note {
-    color: darkblue; /* education notes are dark blue */
+.calendar td span.event-note.EDUCATION-note {
+    color: darkblue; /* EDUCATION notes are dark blue */
 }
 .calendar td span.event-note.conflict-note {
     color: maroon; /* Conflict notes are maroon */
@@ -64,10 +64,10 @@ body {
     color: grey; /* Dates not in the current month are grey */
 }
 /* Event Background Colors */
-.calendar td.case-event {
+.calendar td.CASE-event {
     background-color: yellow;
 }
-.calendar td.education-event {
+.calendar td.EDUCATION-event {
     background-color: lightblue;
 }
 .calendar td.PTO-event {
