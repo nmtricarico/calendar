@@ -6,18 +6,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	// Get month name and set title
 	const monthNames = [
-		"January",
-		"February",
-		"March",
-		"April",
-		"May",
-		"June",
-		"July",
-		"August",
-		"September",
-		"October",
-		"November",
-		"December"
+		"JANUARY",
+		"FEBRUARY",
+		"MARCH",
+		"APRIL",
+		"MAY",
+		"JUNE",
+		"JULY",
+		"AUGUST",
+		"SEPTEMBER",
+		"OCTOBER",
+		"NOVEMBER",
+		"DECEMBER"
 	];
 	document.getElementById("monthYear").innerText =
 		monthNames[month] + " " + year;
