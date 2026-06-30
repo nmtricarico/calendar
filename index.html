@@ -1,27 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Dynamic Calendar with Events</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surgeon Pathway Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <header class="app-header">
+    <div>
+      <h1>Surgeon Pathway Tracker</h1>
+      <p>Plan, monitor, and manage account progression through the four-phase pathway.</p>
+    </div>
+  </header>
 
-    <!-- Month and Year Heading -->
-    <h1 id="monthYear" style="text-align: center; margin-top: 20px;"></h1>
+  <main id="appRoot" class="app-shell">
+    <!-- Views are rendered by app.js -->
+  </main>
 
-    <!-- Tooltip Div (if using tooltips) -->
-    <div id="tooltip" class="tooltip"></div>
+  <div id="filterModal" class="modal hidden" aria-hidden="true">
+    <div id="filterModalBackdrop" class="modal-backdrop"></div>
 
-    <!-- Calendar Table -->
-    <table class="calendar" id="calendarTable">
-     <!-- Calendar will be generated here by JavaScript -->
-    </table>
+    <section class="modal-panel" aria-label="Filters">
+      <div class="modal-header">
+        <h2>Filters</h2>
+        <button id="closeFilterModalButton" type="button" class="icon-button" aria-label="Close filters">×</button>
+      </div>
 
-    <!-- Add the phrase below the calendar -->
-   <p class="conflict">RED dates indicate conflict</p>
+      <div class="modal-grid">
+        <div class="form-field">
+          <label for="filterPhaseInput">Phase</label>
+          <select id="filterPhaseInput"></select>
+        </div>
 
-    <!-- Include your JavaScript file -->
-    <script src="script.js"></script>
+        <div class="form-field">
+          <label for="filterStatusInput">Status</label>
+          <select id="filterStatusInput"></select>
+        </div>
+
+        <div class="form-field">
+          <label for="filterAccountInput">Account</label>
+          <select id="filterAccountInput"></select>
+        </div>
+
+        <div class="form-field">
+          <label for="filterOwnerInput">Owner</label>
+          <select id="filterOwnerInput"></select>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="applyFiltersButton" type="button" class="primary-button">Apply Filters</button>
+        <button id="clearFiltersButton" type="button" class="secondary-button">Clear Filters</button>
+      </div>
+    </section>
+  </div>
+
+  <div id="dataToolsModal" class="modal hidden" aria-hidden="true">
+    <div id="dataToolsModalBackdrop" class="modal-backdrop"></div>
+
+    <section class="modal-panel" aria-label="Data tools">
+      <div class="modal-header">
+        <h2>Data Tools</h2>
+        <button id="closeDataToolsModalButton" type="button" class="icon-button" aria-label="Close data tools">×</button>
+      </div>
+
+      <div class="data-tool-block">
+        <h3>CSV Reporting Export</h3>
+        <p class="data-note">CSV exports are for Excel, Google Sheets, and quick reporting.</p>
+        <div class="data-actions">
+          <button id="exportAllCsvButton" type="button" class="primary-button">Export All Accounts CSV</button>
+          <button id="exportCurrentCsvButton" type="button" class="secondary-button">Export Current View CSV</button>
+        </div>
+      </div>
+
+      <div class="data-tool-block data-tool-block-separated">
+        <h3>JSON Backup / Restore</h3>
+        <p class="data-note">JSON backups preserve the full editable tracker data, including phase dates, tasks, progress, and next actions.</p>
+        <div class="data-actions">
+          <button id="exportJsonBackupButton" type="button" class="primary-button">Export JSON Backup</button>
+          <button id="importJsonBackupButton" type="button" class="secondary-button">Import JSON Backup</button>
+          <input id="importJsonBackupInput" type="file" accept=".json,application/json" class="hidden" />
+        </div>
+      </div>
+
+      <div class="data-tool-block data-tool-block-separated">
+        <h3>Reset</h3>
+        <p class="data-note">Resetting removes browser-saved tracker data and restores the demo dataset.</p>
+        <div class="data-actions">
+          <button id="resetDemoDataButton" type="button" class="danger-button">Reset Demo Data</button>
+        </div>
+      </div>
+
+      <p id="dataToolsMessage" class="form-message" aria-live="polite"></p>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
